@@ -21,15 +21,15 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['env']
-          }
-        }
+            presets: ['env'],
+          },
+        },
       },
       {
-        test: [ /\.vert$/, /\.frag$/ ],
-        use: 'raw-loader'
-      }
-    ]
+        test: [/\.vert$/, /\.frag$/],
+        use: 'raw-loader',
+      },
+    ],
   },
 
   devServer: {
@@ -44,12 +44,12 @@ module.exports = {
       },
       {
         from: path.resolve(__dirname, 'assets', '**', '*'),
-        to: path.resolve(__dirname, 'dist')
+        to: path.resolve(__dirname, 'dist'),
       },
     ]),
     new webpack.DefinePlugin({
       'typeof CANVAS_RENDERER': JSON.stringify(true),
-      'typeof WEBGL_RENDERER': JSON.stringify(true)
+      'typeof WEBGL_RENDERER': JSON.stringify(true),
     }),
   ],
 };
