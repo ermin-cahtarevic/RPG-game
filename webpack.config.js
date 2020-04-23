@@ -24,6 +24,10 @@ module.exports = {
             presets: ['env']
           }
         }
+      },
+      {
+        test: [ /\.vert$/, /\.frag$/ ],
+        use: 'raw-loader'
       }
     ]
   },
@@ -37,6 +41,10 @@ module.exports = {
       {
         from: path.resolve(__dirname, 'index.html'),
         to: path.resolve(__dirname, 'dist'),
+      },
+      {
+        from: path.resolve(__dirname, 'assets', '**', '*'),
+        to: path.resolve(__dirname, 'dist')
       },
     ]),
     new webpack.DefinePlugin({
