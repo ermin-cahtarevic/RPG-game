@@ -82,7 +82,34 @@ const WorldScene = new Phaser.Class({
       repeat: -1,
     });
 
-    this.physics.add.overlap(this.player, trees, this.onMeetEnemy, false, this);
+    const skelleton = this.add.zone(850, 175).setSize(100, 20);
+    this.physics.world.enable(skelleton, 0);
+    skelleton.name = 'skelleton';
+    this.physics.add.overlap(this.player, skelleton, this.onMeetEnemy, false, this);
+
+    const pirate = this.add.zone(50, 350).setSize(100, 20);
+    this.physics.world.enable(pirate, 0);
+    pirate.name = 'pirate';
+    this.physics.add.overlap(this.player, pirate, this.onMeetEnemy, false, this);
+
+    const ninja = this.add.zone(850, 510).setSize(100, 20);
+    this.physics.world.enable(ninja, 0);
+    ninja.name = 'ninja';
+    this.physics.add.overlap(this.player, ninja, this.onMeetEnemy, false, this);
+
+    const monster = this.add.zone(100, 550).setSize(20, 100);
+    this.physics.world.enable(monster, 0);
+    monster.name = 'monster';
+    this.physics.add.overlap(this.player, monster, this.onMeetEnemy, false, this);
+
+    const win = this.add.zone(20, 550).setSize(20, 100);
+    this.physics.world.enable(win, 0);
+    win.name = 'win';
+    this.physics.add.overlap(this.player, win, this.onFinishGame, false, this);
+
+    
+
+    // this.physics.add.overlap(this.player, trees, this.onEnterForest, false, this);
     this.sys.events.on('wake', this.wake, this);
   },
 
@@ -93,16 +120,24 @@ const WorldScene = new Phaser.Class({
     this.cursors.down.reset();
   },
 
-  onMeetEnemy(player) {
-    player.x = 50;
-    player.y = 50;
-    // shake the world
-    this.cameras.main.shake(300);
-
+  onEnterForest(player) {
     // start battle
-    this.scene.switch('BattleScene');
+    this.scene.start('BattleScene', {enemy: 'forest', y: this.player.y});
   },
 
+  onMeetEnemy(player, enemyType) {
+    enemyType.x = 1200;
+    enemyType.y = 800;
+    this.playerX = this.player.x;
+    this.playerY = this.player.y;
+    // this.scene.start('BattleScene', {enemy: enemyType, y: this.player.y});
+    this.scene.sleep('WorldScene');
+    this.scene.run('BattleScene', {enemy: enemyType.name, y: this.player.y});
+  },
+
+  onFinishGame() {
+
+  },
 
   update() {
     this.player.body.setVelocity(0);

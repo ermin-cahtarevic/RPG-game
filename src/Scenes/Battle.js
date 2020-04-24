@@ -7,15 +7,25 @@ const BattleScene = new Phaser.Class({
 
   Extends: Phaser.Scene,
 
-  initialize: function BattleScene() {
+  initialize: function BattleScene(data) {
+    
     Phaser.Scene.call(this, { key: 'BattleScene' });
+    
+  },
+
+  init(data) {
+    this.enemyData = data.enemy;
+    this.playerY = data.y;
   },
 
   create() {
-    // change the background to green
-    this.cameras.main.setBackgroundColor('rgba(0, 200, 0, 0.5)');
-
-    this.startBattle();
+    this.add.image(400, 300, 'forest-bg');
+    if (this.enemyData === 'forest') {
+      this.startBattle('forest');
+    } else {
+      this.startBattle(this.enemyData);
+    }
+    
     // on wake event we call startBattle too
     this.sys.events.on('wake', this.startBattle, this);
   },
@@ -51,27 +61,64 @@ const BattleScene = new Phaser.Class({
     }
   },
 
-  startBattle() {
-    // player character - warrior
-    const warrior = new PlayerCharacter(this, 250, 50, 'player', 1, 'Warrior', 100, 20);
-    this.add.existing(warrior);
+  startBattle(data) {
+    // player character - warrior1
+    const warrior1 = new PlayerCharacter(this, 650, 125, 'warrior1', 'Warrior 1', 100, 120);
+    warrior1.scale = 1.5;
+    this.add.existing(warrior1);
 
-    // player character - mage
-    const mage = new PlayerCharacter(this, 250, 100, 'player', 4, 'Mage', 80, 8);
-    this.add.existing(mage);
+    // player character - warrior2
+    const warrior2 = new PlayerCharacter(this, 650, 275, 'warrior2', 'Warrior 2', 80, 120);
+    warrior2.scale = 1.5;
+    this.add.existing(warrior2);
 
-    const dragonblue = new Enemy(this, 50, 45, 'dragonblue', null, 'Monster B', 50, 3);
-    dragonblue.scale = 0.5;
-    this.add.existing(dragonblue);
+    let enemy1 = '';
+    let enemy2 = '';
+    console.log(data)
+    if (data === 'forest') {
+      if (Math.floor(this.playerY) < 300) {
+        enemy1 = new Enemy(this, 150, 120, 'bat1', 'Bat 1', 50, 3);
+        enemy2 = new Enemy(this, 150, 280, 'bat2', 'Bat 2', 50, 3);
+      } else {
+        enemy1 = new Enemy(this, 150, 120, 'spider1', 'Spider 1', 50, 3);
+        enemy2 = new Enemy(this, 150, 280, 'spider2', 'Spider 2', 50, 3);
+      }
+    } else {
+      switch (data) {
+        case 'skelleton':
+          enemy1 = new Enemy(this, 150, 120, 'skelleton1', 'Skelleton 1', 50, 3);
+          enemy2 = new Enemy(this, 150, 280, 'skelleton2', 'Skelleton 2', 50, 3);
+          break;
+        case 'pirate':
+          enemy1 = new Enemy(this, 150, 120, 'pirate1', 'Pirate 1', 50, 3);
+          enemy2 = new Enemy(this, 150, 280, 'pirate2', 'Pirate 2', 50, 3);
+          break;
+        case 'ninja':
+          enemy1 = new Enemy(this, 150, 120, 'ninja1', 'Ninja 1', 50, 3);
+          enemy2 = new Enemy(this, 150, 280, 'ninja2', 'Ninja 2', 50, 3);
+          break;
+        case 'monster':
+          enemy1 = new Enemy(this, 150, 120, 'monster1', 'Monster 1', 50, 3);
+          enemy2 = new Enemy(this, 150, 280, 'monster2', 'Monster 2', 50, 3);
+          break;
 
-    const dragonOrange = new Enemy(this, 50, 105, 'dragonorrange', null, 'Monster O', 50, 3);
-    dragonOrange.scale = 0.5;
-    this.add.existing(dragonOrange);
+        default:
+          enemy1 = new Enemy(this, 150, 120, 'skelleton1', 'Skelleton 1', 50, 3);
+          enemy2 = new Enemy(this, 150, 280, 'skelleton2', 'Skelleton 2', 50, 3);
+          
+          break;
+      }
+    }
 
+    enemy1.scale = 1.5;
+    enemy2.scale = 1.5;
+    this.add.existing(enemy1);
+    this.add.existing(enemy2);
+    
     // array with heroes
-    this.heroes = [warrior, mage];
+    this.heroes = [warrior1, warrior2];
     // array with enemies
-    this.enemies = [dragonblue, dragonOrange];
+    this.enemies = [enemy1, enemy2];
     // array with both parties, who will attack
     this.units = this.heroes.concat(this.enemies);
 
@@ -104,9 +151,10 @@ const BattleScene = new Phaser.Class({
     }
     this.units.length = 0;
     // sleep the UI
-    this.scene.sleep('UIScene');
+    this.scene.stop('UIScene');
+    this.scene.stop('BattleScene');
     // return to WorldScene and sleep current BattleScene
-    this.scene.switch('WorldScene');
+    this.scene.run('WorldScene');
   },
 
   // when the player have selected the enemy to be attacked
@@ -123,8 +171,8 @@ const BattleScene = new Phaser.Class({
 const Unit = new Phaser.Class({
   Extends: Phaser.GameObjects.Sprite,
 
-  initialize: function Unit(scene, x, y, texture, frame, type, hp, damage) {
-    Phaser.GameObjects.Sprite.call(this, scene, x, y, texture, frame);
+  initialize: function Unit(scene, x, y, texture, type, hp, damage) {
+    Phaser.GameObjects.Sprite.call(this, scene, x, y, texture);
     this.type = type;
     this.hp = hp;
     this.maxHp = this.hp;
@@ -161,16 +209,16 @@ const Unit = new Phaser.Class({
 const Enemy = new Phaser.Class({
   Extends: Unit,
 
-  initialize: function Enemy(scene, x, y, texture, frame, type, hp, damage) {
-    Unit.call(this, scene, x, y, texture, frame, type, hp, damage);
+  initialize: function Enemy(scene, x, y, texture, type, hp, damage) {
+    Unit.call(this, scene, x, y, texture, type, hp, damage);
   },
 });
 
 const PlayerCharacter = new Phaser.Class({
   Extends: Unit,
 
-  initialize: function PlayerCharacter(scene, x, y, texture, frame, type, hp, damage) {
-    Unit.call(this, scene, x, y, texture, frame, type, hp, damage);
+  initialize: function PlayerCharacter(scene, x, y, texture, type, hp, damage) {
+    Unit.call(this, scene, x, y, texture, type, hp, damage);
     this.flipX = true;
     this.setScale(2);
   },
@@ -212,7 +260,7 @@ const Menu = new Phaser.Class({
   },
 
   addMenuItem(unit) {
-    const menuItem = new MenuItem(0, this.menuItems.length * 20, unit, this.scene);
+    const menuItem = new MenuItem(0, this.menuItems.length * 40, unit, this.scene);
     this.menuItems.push(menuItem);
     this.add(menuItem);
     return menuItem;
@@ -326,19 +374,20 @@ const UIScene = new Phaser.Class({
     this.graphics = this.add.graphics();
     this.graphics.lineStyle(1, 0xffffff);
     this.graphics.fillStyle(0x031f4c, 1);
-    this.graphics.strokeRect(2, 150, 90, 100);
-    this.graphics.fillRect(2, 150, 90, 100);
-    this.graphics.strokeRect(95, 150, 90, 100);
-    this.graphics.fillRect(95, 150, 90, 100);
-    this.graphics.strokeRect(188, 150, 130, 100);
-    this.graphics.fillRect(188, 150, 130, 100);
+    this.graphics.strokeRect(2, 398, 290, 200);
+    this.graphics.fillRect(2, 398, 290, 200);
+    this.graphics.strokeRect(300, 398, 200, 200);
+    this.graphics.fillRect(300, 398, 200, 200);
+    this.graphics.strokeRect(508, 398, 290, 200);
+    this.graphics.fillRect(508, 398, 290, 200);
 
     // basic container to hold all menus
     this.menus = this.add.container();
+    this.menus.scale = 2
 
-    this.heroesMenu = new HeroesMenu(195, 153, this);
-    this.actionsMenu = new ActionsMenu(100, 153, this);
-    this.enemiesMenu = new EnemiesMenu(8, 153, this);
+    this.heroesMenu = new HeroesMenu(275, 210, this);
+    this.actionsMenu = new ActionsMenu(170, 210, this);
+    this.enemiesMenu = new EnemiesMenu(8, 210, this);
 
     // the currently selected menu
     this.currentMenu = this.actionsMenu;
@@ -434,10 +483,10 @@ const Message = new Phaser.Class({
     this.add(graphics);
     graphics.lineStyle(1, 0xffffff, 0.8);
     graphics.fillStyle(0x031f4c, 0.3);
-    graphics.strokeRect(-90, -15, 180, 50);
-    graphics.fillRect(-90, -15, 180, 50);
-    this.text = new Phaser.GameObjects.Text(scene, 0, 10, '', {
-      color: '#ffffff', align: 'center', fontSize: 13, wordWrap: { width: 160, useAdvancedWrap: true },
+    graphics.strokeRect(100, 115, 300, 150);
+    graphics.fillRect(100, 115, 300, 150);
+    this.text = new Phaser.GameObjects.Text(scene, 250, 190, '', {
+      color: '#ffffff', align: 'center', fontSize: 23, wordWrap: { width: 260, useAdvancedWrap: true },
     });
     this.add(this.text);
     this.text.setOrigin(0.5);
@@ -446,7 +495,10 @@ const Message = new Phaser.Class({
   },
 
   showMessage(text) {
-    this.text.setText(text);
+    
+    this.text = text;
+    console.log(this.text)
+    // this.text.setText(text);
     this.visible = true;
     if (this.hideEvent) this.hideEvent.remove(false);
     this.hideEvent = this.scene.time.addEvent({
@@ -457,6 +509,7 @@ const Message = new Phaser.Class({
   },
 
   hideMessage() {
+    this.text = '';
     this.hideEvent = null;
     this.visible = false;
   },

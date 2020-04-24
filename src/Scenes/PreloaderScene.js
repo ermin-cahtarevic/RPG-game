@@ -83,24 +83,37 @@ export default class PreloaderScene extends Phaser.Scene {
 
     this.timedEvent = this.time.delayedCall(3000, this.ready, [], this);
 
-    // load assets needed in our game
-    this.load.image('blueButton1', 'assets/ui/btn-brown2.png');
-    this.load.image('blueButton2', 'assets/ui/btn-brown1.png');
-    this.load.image('phaserLogo', 'assets/logo.png');
+    // ui assets
+    this.load.image('forest-bg', 'assets/forest-bg.png');
+    this.load.image('rpg-logo', 'assets/rpg-logo.png');
+    this.load.image('button1', 'assets/ui/btn-brown2.png');
+    this.load.image('button2', 'assets/ui/btn-brown1.png');
     this.load.image('box', 'assets/ui/unchecked.png');
     this.load.image('checkedBox', 'assets/ui/checked.png');
     this.load.audio('bgMusic', ['assets/WarTheme.mp3']);
 
-    this.load.image('rpg-logo', 'assets/rpg-logo.png');
-
+    // map assets
     this.load.image('map', 'assets/map/rpg-map1.png');
     this.load.image('tree', 'assets/map/tree.png');
-    this.load.image('forest-bg', 'assets/forest-bg.png');
-
+    
+    // player assets
     this.load.spritesheet('player', 'assets/RPG_assets.png', { frameWidth: 16, frameHeight: 16 });
+    this.load.image('warrior1', 'assets/warrior2.png');
+    this.load.image('warrior2', 'assets/warrior1.png');
 
-    this.load.image('dragonblue', 'assets/monster-black.png');
-    this.load.image('dragonorrange', 'assets/monster-orange.png');
+    // enemy assets
+    this.load.image('bat1', 'assets/bat1.png');
+    this.load.image('bat2', 'assets/bat2.png');
+    this.load.image('spider1', 'assets/spider1.png');
+    this.load.image('spider2', 'assets/spider2.png');
+    this.load.image('skelleton1', 'assets/skelleton1.png');
+    this.load.image('skelleton2', 'assets/skelleton2.png');
+    this.load.image('pirate1', 'assets/pirate1.png');
+    this.load.image('pirate2', 'assets/pirate2.png');
+    this.load.image('ninja1', 'assets/ninja1.png');
+    this.load.image('ninja2', 'assets/ninja2.png');
+    this.load.image('monster1', 'assets/monster1.png');
+    this.load.image('monster2', 'assets/monster2.png');
   }
 
   ready() {

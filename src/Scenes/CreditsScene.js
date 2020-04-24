@@ -73,6 +73,6 @@ export default class CreditsScene extends Phaser.Scene {
     this.creditsGDA.displayOriginY = -90;
     this.creditsOGA.displayOriginY = -130;
 
-    this.menuButton = new Button(this, 400, 530, 'blueButton1', 'blueButton2', 'Menu', 'Title');
+    this.menuButton = new Button(this, 400, 530, 'button1', 'button2', 'Menu', 'Title');
   }
 }

@@ -15,12 +15,12 @@ export default class TitleScene extends Phaser.Scene {
     const rpgLogo = this.add.image(400, 90, 'rpg-logo');
     rpgLogo.scale = 1.4;
     // Game
-    this.gameButton = new Button(this, config.width / 2, config.height / 2 - 70, 'blueButton1', 'blueButton2', 'Play', 'WorldScene');
+    this.gameButton = new Button(this, config.width / 2, config.height / 2 - 70, 'button1', 'button2', 'Play', 'WorldScene');
 
     // Options
-    this.optionsButton = new Button(this, config.width / 2, config.height / 2 + 30, 'blueButton1', 'blueButton2', 'Options', 'Options');
+    this.optionsButton = new Button(this, config.width / 2, config.height / 2 + 30, 'button1', 'button2', 'Options', 'Options');
     // Credits
-    this.creditsButton = new Button(this, config.width / 2, config.height / 2 + 130, 'blueButton1', 'blueButton2', 'Credits', 'Credits');
+    this.creditsButton = new Button(this, config.width / 2, config.height / 2 + 130, 'button1', 'button2', 'Credits', 'Credits');
 
     this.model = this.sys.game.globals.model;
     if (this.model.musicOn === true && this.model.bgMusicPlaying === false) {
