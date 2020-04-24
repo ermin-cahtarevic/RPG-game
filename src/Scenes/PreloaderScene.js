@@ -12,6 +12,8 @@ export default class PreloaderScene extends Phaser.Scene {
   }
 
   preload() {
+    this.add.image(400, 300, 'forest-bg');
+
     // add logo image
     this.add.image(400, 150, 'rpg-logo').scale = 1.4;
 
@@ -87,12 +89,13 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('phaserLogo', 'assets/logo.png');
     this.load.image('box', 'assets/ui/unchecked.png');
     this.load.image('checkedBox', 'assets/ui/checked.png');
-    this.load.audio('bgMusic', ['assets/TownTheme.mp3']);
+    this.load.audio('bgMusic', ['assets/WarTheme.mp3']);
 
     this.load.image('rpg-logo', 'assets/rpg-logo.png');
 
     this.load.image('map', 'assets/map/rpg-map1.png');
     this.load.image('tree', 'assets/map/tree.png');
+    this.load.image('forest-bg', 'assets/forest-bg.png');
 
     this.load.spritesheet('player', 'assets/RPG_assets.png', { frameWidth: 16, frameHeight: 16 });
 

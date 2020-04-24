@@ -9,6 +9,7 @@ export default class BootScene extends Phaser.Scene {
 
   preload() {
     this.load.image('rpg-logo', 'assets/rpg-logo.png');
+    this.load.image('forest-bg', 'assets/forest-bg.png');
   }
 
   create() {

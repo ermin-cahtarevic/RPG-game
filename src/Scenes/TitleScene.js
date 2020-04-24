@@ -11,6 +11,7 @@ export default class TitleScene extends Phaser.Scene {
   }
 
   create() {
+    this.add.image(400, 300, 'forest-bg');
     const rpgLogo = this.add.image(400, 90, 'rpg-logo');
     rpgLogo.scale = 1.4;
     // Game

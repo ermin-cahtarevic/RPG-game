@@ -43,6 +43,7 @@ const WorldScene = new Phaser.Class({
     }
 
     this.player = this.physics.add.sprite(50, 50, 'player', 6);
+    this.player.scale = 1.2;
     this.physics.world.bounds.width = map.width;
     this.physics.world.bounds.height = map.height;
     this.player.setCollideWorldBounds(true);
@@ -53,7 +54,6 @@ const WorldScene = new Phaser.Class({
     this.cameras.main.zoom = 2;
     this.cameras.main.startFollow(this.player);
     this.cameras.main.roundPixels = true;
-
 
     this.anims.create({
       key: 'left',
