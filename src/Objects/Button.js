@@ -10,8 +10,10 @@ export default class Button extends Phaser.GameObjects.Container {
     this.y = y;
 
     this.button = this.scene.add.sprite(0, 0, key1).setInteractive();
-    this.text = this.scene.add.text(0, 0, text, { fontSize: '32px', fill: '#fff' });
+    this.button.scale = 1.2;
+    this.text = this.scene.add.text(0, 0, text, { fontSize: '28px', fill: '#fff' });
     Phaser.Display.Align.In.Center(this.text, this.button);
+    this.text.displayOriginY = 10;
 
     this.add(this.button);
     this.add(this.text);
@@ -22,10 +24,12 @@ export default class Button extends Phaser.GameObjects.Container {
 
     this.button.on('pointerover', () => {
       this.button.setTexture(key2);
+      this.text.displayOriginY = 0;
     });
 
     this.button.on('pointerout', () => {
       this.button.setTexture(key1);
+      this.text.displayOriginY = 10;
     });
 
     this.scene.add.existing(this);
