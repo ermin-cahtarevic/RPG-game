@@ -95,7 +95,7 @@ export default class PreloaderScene extends Phaser.Scene {
     // map assets
     this.load.image('map', 'assets/map/rpg-map1.png');
     this.load.image('tree', 'assets/map/tree.png');
-    
+
     // player assets
     this.load.spritesheet('player', 'assets/RPG_assets.png', { frameWidth: 16, frameHeight: 16 });
     this.load.image('warrior1', 'assets/warrior2.png');
@@ -106,8 +106,8 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('bat2', 'assets/bat2.png');
     this.load.image('spider1', 'assets/spider1.png');
     this.load.image('spider2', 'assets/spider2.png');
-    this.load.image('skelleton1', 'assets/skelleton1.png');
-    this.load.image('skelleton2', 'assets/skelleton2.png');
+    this.load.image('skeleton1', 'assets/skeleton1.png');
+    this.load.image('skeleton2', 'assets/skeleton2.png');
     this.load.image('pirate1', 'assets/pirate1.png');
     this.load.image('pirate2', 'assets/pirate2.png');
     this.load.image('ninja1', 'assets/ninja1.png');

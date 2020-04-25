@@ -83,8 +83,8 @@ const WorldScene = new Phaser.Class({
       repeat: -1,
     });
 
-    const skelleton = this.add.zone(850, 175).setSize(100, 20);
-    skelleton.name = 'skelleton';
+    const skeleton = this.add.zone(850, 175).setSize(100, 20);
+    skeleton.name = 'skeleton';
 
     const pirate = this.add.zone(50, 350).setSize(100, 20);
     pirate.name = 'pirate';
@@ -95,9 +95,10 @@ const WorldScene = new Phaser.Class({
     const monster = this.add.zone(100, 550).setSize(20, 100);
     monster.name = 'monster';
 
-    [skelleton, pirate, ninja, monster].map(enemy => {
+    [skeleton, pirate, ninja, monster].map(enemy => {
       this.physics.world.enable(enemy, 0);
       this.physics.add.overlap(this.player, enemy, this.onMeetEnemy, false, this);
+      return true;
     });
 
     const win = this.add.zone(20, 550).setSize(20, 100);
@@ -106,45 +107,76 @@ const WorldScene = new Phaser.Class({
     this.physics.add.overlap(this.player, win, this.onFinishGame, false, this);
 
     this.overlapTrigger = false;
-    this.overlapForest = this.physics.add.overlap(this.player, this.trees, this.onMeetEnemy, false, this);
+    this.overlapForest = this.physics.add.overlap(
+      this.player,
+      this.trees,
+      this.onMeetEnemy,
+      false,
+      this,
+    );
     this.sys.events.on('wake', this.wake, this);
-
   },
 
   wake() {
-    this.player.x = this.playerX;
-    this.player.y = this.playerY - 10;
+    if (this.playerY < 150) {
+      this.player.x = 50;
+      this.player.y = 50;
+    } else if (this.playerY >= 150 && this.playerY < 325) {
+      this.player.x = 850;
+      this.player.y = 270;
+    } else if (this.playerY >= 325 && this.playerY < 485) {
+      this.player.x = 50;
+      this.player.y = 450;
+    } else if (this.playerY >= 485 && this.playerX > 125) {
+      this.player.x = 850;
+      this.player.y = 575;
+    } else if (this.playerY >= 485 && this.playerX <= 125) {
+      this.player.x = 100;
+      this.player.y = 575;
+    } else {
+      this.player.x = 50;
+      this.player.y = 50;
+    }
+
     this.cursors.left.reset();
     this.cursors.right.reset();
     this.cursors.up.reset();
     this.cursors.down.reset();
-    this.overlapForest = this.physics.add.overlap(this.player, this.trees, this.onMeetEnemy, false, this);
+    this.overlapForest = this.physics.add.overlap(
+      this.player,
+      this.trees,
+      this.onMeetEnemy,
+      false,
+      this,
+    );
     this.overlapTrigger = false;
   },
 
   onMeetEnemy(player, enemyType) {
-
     if (this.overlapTrigger) {
       this.physics.world.removeCollider(this.overlapForest);
       return;
+    }
+
+    if (enemyType.texture !== undefined) {
+      enemyType.name = 'tree';
     }
 
     enemyType.x = 1200;
     enemyType.y = 800;
     this.playerX = this.player.x;
     this.playerY = this.player.y;
-    this.overlapTrigger = true; 
-    
-    this.count += 1;
+    this.overlapTrigger = true;
+
     this.scene.add('BattleScene', BattleScene);
     this.scene.add('UIScene', UIScene);
 
     this.scene.sleep('WorldScene');
-    this.scene.launch('BattleScene', {enemy: enemyType.texture.key, y: this.player.y});
+    this.scene.launch('BattleScene', { enemy: enemyType.name, y: this.player.y });
   },
 
   onFinishGame() {
-    console.log('You won!!!');
+
   },
 
   update() {

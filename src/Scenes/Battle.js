@@ -7,10 +7,8 @@ const BattleScene = new Phaser.Class({
 
   Extends: Phaser.Scene,
 
-  initialize: function BattleScene(data) {
-    
+  initialize: function BattleScene() {
     Phaser.Scene.call(this, { key: 'BattleScene' });
-    
   },
 
   init(data) {
@@ -25,7 +23,7 @@ const BattleScene = new Phaser.Class({
     } else {
       this.startBattle(this.enemyData);
     }
-    
+
     // on wake event we call startBattle too
     this.sys.events.on('wake', this.startBattle, this);
   },
@@ -35,7 +33,8 @@ const BattleScene = new Phaser.Class({
     if (this.checkEndBattle() === 'victory') {
       this.endBattle('victory');
       return;
-    } else if (this.checkEndBattle() === 'gameOver') {
+    }
+    if (this.checkEndBattle() === 'gameOver') {
       this.endBattle('gameOver');
       return;
     }
@@ -67,12 +66,12 @@ const BattleScene = new Phaser.Class({
 
   startBattle(data) {
     // player character - warrior1
-    const warrior1 = new PlayerCharacter(this, 650, 125, 'warrior1', 'Warrior 1', 100, 40);
+    const warrior1 = new PlayerCharacter(this, 650, 125, 'warrior1', 'Warrior 1', 100, 140);
     warrior1.scale = 1.5;
     this.add.existing(warrior1);
 
     // player character - warrior2
-    const warrior2 = new PlayerCharacter(this, 650, 275, 'warrior2', 'Warrior 2', 80, 30);
+    const warrior2 = new PlayerCharacter(this, 650, 275, 'warrior2', 'Warrior 2', 80, 130);
     warrior2.scale = 1.5;
     this.add.existing(warrior2);
 
@@ -88,9 +87,9 @@ const BattleScene = new Phaser.Class({
       }
     } else {
       switch (data) {
-        case 'skelleton':
-          enemy1 = new Enemy(this, 150, 120, 'skelleton1', 'Skelleton 1', 50, 3);
-          enemy2 = new Enemy(this, 150, 280, 'skelleton2', 'Skelleton 2', 50, 3);
+        case 'skeleton':
+          enemy1 = new Enemy(this, 150, 120, 'skeleton1', 'Skeleton 1', 50, 3);
+          enemy2 = new Enemy(this, 150, 280, 'skeleton2', 'Skeleton 2', 50, 3);
           break;
         case 'pirate':
           enemy1 = new Enemy(this, 150, 120, 'pirate1', 'Pirate 1', 50, 3);
@@ -106,9 +105,8 @@ const BattleScene = new Phaser.Class({
           break;
 
         default:
-          enemy1 = new Enemy(this, 150, 120, 'skelleton1', 'Skelleton 1', 50, 3);
-          enemy2 = new Enemy(this, 150, 280, 'skelleton2', 'Skelleton 2', 50, 3);
-          
+          enemy1 = new Enemy(this, 150, 120, 'skeleton1', 'Skeleton 1', 50, 3);
+          enemy2 = new Enemy(this, 150, 280, 'skeleton2', 'Skeleton 2', 50, 3);
           break;
       }
     }
@@ -117,7 +115,7 @@ const BattleScene = new Phaser.Class({
     enemy2.scale = 1.5;
     this.add.existing(enemy1);
     this.add.existing(enemy2);
-    
+
     // array with heroes
     this.heroes = [warrior1, warrior2];
     // array with enemies
@@ -157,10 +155,10 @@ const BattleScene = new Phaser.Class({
     }
     this.units.length = 0;
     this.index = -1;
-    
+
     this.scene.remove('UIScene');
     this.scene.remove('BattleScene');
-    
+
     if (result === 'gameOver') {
       this.scene.stop('WorldScene');
       this.scene.run('GameOver');
@@ -395,7 +393,7 @@ const UIScene = new Phaser.Class({
 
     // basic container to hold all menus
     this.menus = this.add.container();
-    this.menus.scale = 2
+    this.menus.scale = 2;
 
     this.heroesMenu = new HeroesMenu(275, 210, this);
     this.actionsMenu = new ActionsMenu(170, 210, this);

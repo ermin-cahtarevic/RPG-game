@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+/* eslint-disable class-methods-use-this */
 
 import 'phaser';
 import config from '../Config/config';
@@ -21,7 +22,7 @@ export default class GameOverScene extends Phaser.Scene {
     this.title = this.add.text(0, 0, 'Game Over', { fontSize: '40px', fontStyle: 'bold', fill: '#fff' });
     this.score = this.add.text(0, 0, 'Score', { fontSize: '30px', fill: '#fff' });
     this.zone = this.add.zone(config.width / 2, config.height / 2, config.width, config.height);
-    
+
     Phaser.Display.Align.In.Center(
       this.title,
       this.zone,
@@ -30,7 +31,7 @@ export default class GameOverScene extends Phaser.Scene {
     Phaser.Display.Align.In.Center(
       this.score,
       this.zone,
-    );  
+    );
 
     this.title.displayOriginY = 50;
     this.score.displayOriginY = -50;

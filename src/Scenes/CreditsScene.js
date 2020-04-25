@@ -22,8 +22,6 @@ export default class CreditsScene extends Phaser.Scene {
     this.creditsOGA = this.add.text(0, 0, 'OpenGameArt', { fontSize: '26px', fill: '#fff' });
     this.zone = this.add.zone(config.width / 2, config.height / 2, config.width, config.height);
 
-    
-
     Phaser.Display.Align.In.Center(
       this.title,
       this.zone,
