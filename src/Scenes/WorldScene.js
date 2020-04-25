@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 
 import 'phaser';
+import { BattleScene, UIScene } from './Battle';
 
 const WorldScene = new Phaser.Class({
 
@@ -13,14 +14,14 @@ const WorldScene = new Phaser.Class({
   create() {
     const map = this.add.image(450, 300, 'map');
 
-    const trees = this.physics.add.staticGroup();
+    this.trees = this.physics.add.staticGroup();
 
     for (let i = 20; i < 800; i += 32) {
       for (let j = 150; j < 200; j += 18) {
         const x = Phaser.Math.RND.between(20, 800);
         const y = Phaser.Math.RND.between(130, 220);
-        trees.create(x, y, 'tree');
-        trees.create(i, j, 'tree');
+        this.trees.create(x, y, 'tree');
+        this.trees.create(i, j, 'tree');
       }
     }
 
@@ -28,8 +29,8 @@ const WorldScene = new Phaser.Class({
       for (let j = 350; j < 400; j += 18) {
         const x = Phaser.Math.RND.between(100, 900);
         const y = Phaser.Math.RND.between(330, 420);
-        trees.create(x, y, 'tree');
-        trees.create(i, j, 'tree');
+        this.trees.create(x, y, 'tree');
+        this.trees.create(i, j, 'tree');
       }
     }
 
@@ -37,8 +38,8 @@ const WorldScene = new Phaser.Class({
       for (let j = 500; j < 525; j += 22) {
         const x = Phaser.Math.RND.between(20, 800);
         const y = Phaser.Math.RND.between(510, 530);
-        trees.create(x, y, 'tree');
-        trees.create(i, j, 'tree');
+        this.trees.create(x, y, 'tree');
+        this.trees.create(i, j, 'tree');
       }
     }
 
@@ -83,60 +84,67 @@ const WorldScene = new Phaser.Class({
     });
 
     const skelleton = this.add.zone(850, 175).setSize(100, 20);
-    this.physics.world.enable(skelleton, 0);
     skelleton.name = 'skelleton';
-    this.physics.add.overlap(this.player, skelleton, this.onMeetEnemy, false, this);
 
     const pirate = this.add.zone(50, 350).setSize(100, 20);
-    this.physics.world.enable(pirate, 0);
     pirate.name = 'pirate';
-    this.physics.add.overlap(this.player, pirate, this.onMeetEnemy, false, this);
 
     const ninja = this.add.zone(850, 510).setSize(100, 20);
-    this.physics.world.enable(ninja, 0);
     ninja.name = 'ninja';
-    this.physics.add.overlap(this.player, ninja, this.onMeetEnemy, false, this);
 
     const monster = this.add.zone(100, 550).setSize(20, 100);
-    this.physics.world.enable(monster, 0);
     monster.name = 'monster';
-    this.physics.add.overlap(this.player, monster, this.onMeetEnemy, false, this);
+
+    [skelleton, pirate, ninja, monster].map(enemy => {
+      this.physics.world.enable(enemy, 0);
+      this.physics.add.overlap(this.player, enemy, this.onMeetEnemy, false, this);
+    });
 
     const win = this.add.zone(20, 550).setSize(20, 100);
     this.physics.world.enable(win, 0);
     win.name = 'win';
     this.physics.add.overlap(this.player, win, this.onFinishGame, false, this);
 
-    
-
-    // this.physics.add.overlap(this.player, trees, this.onEnterForest, false, this);
+    this.overlapTrigger = false;
+    this.overlapForest = this.physics.add.overlap(this.player, this.trees, this.onMeetEnemy, false, this);
     this.sys.events.on('wake', this.wake, this);
+
   },
 
   wake() {
+    this.player.x = this.playerX;
+    this.player.y = this.playerY - 10;
     this.cursors.left.reset();
     this.cursors.right.reset();
     this.cursors.up.reset();
     this.cursors.down.reset();
-  },
-
-  onEnterForest(player) {
-    // start battle
-    this.scene.start('BattleScene', {enemy: 'forest', y: this.player.y});
+    this.overlapForest = this.physics.add.overlap(this.player, this.trees, this.onMeetEnemy, false, this);
+    this.overlapTrigger = false;
   },
 
   onMeetEnemy(player, enemyType) {
+
+    if (this.overlapTrigger) {
+      this.physics.world.removeCollider(this.overlapForest);
+      return;
+    }
+
     enemyType.x = 1200;
     enemyType.y = 800;
     this.playerX = this.player.x;
     this.playerY = this.player.y;
-    // this.scene.start('BattleScene', {enemy: enemyType, y: this.player.y});
+    this.overlapTrigger = true; 
+    
+    this.count += 1;
+    this.scene.add('BattleScene', BattleScene);
+    this.scene.add('UIScene', UIScene);
+
     this.scene.sleep('WorldScene');
-    this.scene.run('BattleScene', {enemy: enemyType.name, y: this.player.y});
+    this.scene.launch('BattleScene', {enemy: enemyType.texture.key, y: this.player.y});
   },
 
   onFinishGame() {
-
+    console.log('You won!!!');
   },
 
   update() {

@@ -16,7 +16,6 @@ export default class TitleScene extends Phaser.Scene {
     rpgLogo.scale = 1.4;
     // Game
     this.gameButton = new Button(this, config.width / 2, config.height / 2 - 70, 'button1', 'button2', 'Play', 'WorldScene');
-
     // Options
     this.optionsButton = new Button(this, config.width / 2, config.height / 2 + 30, 'button1', 'button2', 'Options', 'Options');
     // Credits

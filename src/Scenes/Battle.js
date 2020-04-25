@@ -20,8 +20,8 @@ const BattleScene = new Phaser.Class({
 
   create() {
     this.add.image(400, 300, 'forest-bg');
-    if (this.enemyData === 'forest') {
-      this.startBattle('forest');
+    if (this.enemyData === 'tree') {
+      this.startBattle('tree');
     } else {
       this.startBattle(this.enemyData);
     }
@@ -32,10 +32,14 @@ const BattleScene = new Phaser.Class({
 
   nextTurn() {
     // if we have victory or game over
-    if (this.checkEndBattle()) {
-      this.endBattle();
+    if (this.checkEndBattle() === 'victory') {
+      this.endBattle('victory');
+      return;
+    } else if (this.checkEndBattle() === 'gameOver') {
+      this.endBattle('gameOver');
       return;
     }
+
     do {
       // currently active unit
       this.index += 1;
@@ -63,19 +67,18 @@ const BattleScene = new Phaser.Class({
 
   startBattle(data) {
     // player character - warrior1
-    const warrior1 = new PlayerCharacter(this, 650, 125, 'warrior1', 'Warrior 1', 100, 120);
+    const warrior1 = new PlayerCharacter(this, 650, 125, 'warrior1', 'Warrior 1', 100, 40);
     warrior1.scale = 1.5;
     this.add.existing(warrior1);
 
     // player character - warrior2
-    const warrior2 = new PlayerCharacter(this, 650, 275, 'warrior2', 'Warrior 2', 80, 120);
+    const warrior2 = new PlayerCharacter(this, 650, 275, 'warrior2', 'Warrior 2', 80, 30);
     warrior2.scale = 1.5;
     this.add.existing(warrior2);
 
     let enemy1 = '';
     let enemy2 = '';
-    console.log(data)
-    if (data === 'forest') {
+    if (data === 'tree') {
       if (Math.floor(this.playerY) < 300) {
         enemy1 = new Enemy(this, 150, 120, 'bat1', 'Bat 1', 50, 3);
         enemy2 = new Enemy(this, 150, 280, 'bat2', 'Bat 2', 50, 3);
@@ -124,7 +127,7 @@ const BattleScene = new Phaser.Class({
 
     this.index = -1; // currently active unit
 
-    this.scene.run('UIScene');
+    this.scene.launch('UIScene');
   },
 
   checkEndBattle() {
@@ -138,23 +141,32 @@ const BattleScene = new Phaser.Class({
     for (let i = 0; i < this.heroes.length; i += 1) {
       if (this.heroes[i].living) gameOver = false;
     }
+
+    if (victory) return 'victory';
+    if (gameOver) return 'gameOver';
     return victory || gameOver;
   },
 
-  endBattle() {
+  endBattle(result) {
     // clear state, remove sprites
-    this.heroes.length = 0;
-    this.enemies.length = 0;
+    this.heroes = [];
+    this.enemies = [];
     for (let i = 0; i < this.units.length; i += 1) {
       // link item
       this.units[i].destroy();
     }
     this.units.length = 0;
-    // sleep the UI
-    this.scene.stop('UIScene');
-    this.scene.stop('BattleScene');
-    // return to WorldScene and sleep current BattleScene
-    this.scene.run('WorldScene');
+    this.index = -1;
+    
+    this.scene.remove('UIScene');
+    this.scene.remove('BattleScene');
+    
+    if (result === 'gameOver') {
+      this.scene.stop('WorldScene');
+      this.scene.run('GameOver');
+    } else if (result === 'victory') {
+      this.scene.wake('WorldScene');
+    }
   },
 
   // when the player have selected the enemy to be attacked
@@ -495,10 +507,7 @@ const Message = new Phaser.Class({
   },
 
   showMessage(text) {
-    
-    this.text = text;
-    console.log(this.text)
-    // this.text.setText(text);
+    this.text.setText(text);
     this.visible = true;
     if (this.hideEvent) this.hideEvent.remove(false);
     this.hideEvent = this.scene.time.addEvent({
@@ -509,7 +518,6 @@ const Message = new Phaser.Class({
   },
 
   hideMessage() {
-    this.text = '';
     this.hideEvent = null;
     this.visible = false;
   },
