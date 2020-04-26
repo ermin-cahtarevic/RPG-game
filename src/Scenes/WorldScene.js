@@ -2,6 +2,7 @@
 
 import 'phaser';
 import { BattleScene, UIScene } from './Battle';
+import { getScore } from '../score';
 
 const WorldScene = new Phaser.Class({
 
@@ -114,6 +115,14 @@ const WorldScene = new Phaser.Class({
       false,
       this,
     );
+
+    const scoreBox = this.add.image(255, 165, 'button2');
+    scoreBox.setScrollFactor(0, 0);
+    scoreBox.scale = 0.5;
+
+    this.textScore = this.add.text(210, 157, `Score: ${getScore()}`, { fontSize: '14px', fill: '#fff' });
+    this.textScore.setScrollFactor(0, 0);
+
     this.sys.events.on('wake', this.wake, this);
   },
 
@@ -137,6 +146,8 @@ const WorldScene = new Phaser.Class({
       this.player.x = 50;
       this.player.y = 50;
     }
+
+    this.textScore.setText(`Score: ${getScore()}`);
 
     this.cursors.left.reset();
     this.cursors.right.reset();

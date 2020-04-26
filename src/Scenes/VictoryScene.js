@@ -4,6 +4,9 @@
 import 'phaser';
 import config from '../Config/config';
 import Button from '../Objects/Button';
+import { getScore, resetScore } from '../score';
+import getUser from '../user';
+import { postScore } from '../scoreAPI';
 
 export default class VictoryScene extends Phaser.Scene {
   constructor() {
@@ -27,7 +30,7 @@ export default class VictoryScene extends Phaser.Scene {
         wordWrap: { width: 550, useAdvancedWrap: true },
       },
     );
-    this.score = this.add.text(0, 0, 'Score', { fontSize: '30px', fill: '#fff' });
+    this.score = this.add.text(0, 0, `Score: ${getScore()}`, { fontSize: '30px', fill: '#fff' });
     this.zone = this.add.zone(config.width / 2, config.height / 2, config.width, config.height);
 
     Phaser.Display.Align.In.Center(
@@ -49,6 +52,13 @@ export default class VictoryScene extends Phaser.Scene {
     this.messageText.displayOriginY = -15;
     this.score.displayOriginY = -80;
 
+    const user = getUser();
+    const finalScore = getScore();
+
+    postScore(user, finalScore)
+      .then(x => console.log(x));
+
     this.menuButton = new Button(this, 400, 530, 'button1', 'button2', 'Menu', 'Title');
+    resetScore();
   }
 }

@@ -2,6 +2,7 @@
 /* eslint-disable no-use-before-define */
 
 import 'phaser';
+import { setScore } from '../score';
 
 const BattleScene = new Phaser.Class({
 
@@ -30,11 +31,12 @@ const BattleScene = new Phaser.Class({
 
   nextTurn() {
     // if we have victory or game over
-    if (this.checkEndBattle() === 'victory') {
+    const checkBattle = this.checkEndBattle();
+    if (checkBattle.result === 'victory') {
       this.endBattle('victory');
       return;
     }
-    if (this.checkEndBattle() === 'gameOver') {
+    if (checkBattle.result === 'gameOver') {
       this.endBattle('gameOver');
       return;
     }
@@ -140,9 +142,20 @@ const BattleScene = new Phaser.Class({
       if (this.heroes[i].living) gameOver = false;
     }
 
-    if (victory) return 'victory';
+    if (victory) return { result: 'victory' };
     if (gameOver) return 'gameOver';
     return victory || gameOver;
+  },
+
+  getPoints() {
+    let result = 0;
+    if (this.enemyData === 'tree') result = 10;
+    else if (this.enemyData === 'skeleton') result = 30;
+    else if (this.enemyData === 'pirate') result = 50;
+    else if (this.enemyData === 'ninja') result = 70;
+    else if (this.enemyData === 'monster') result = 150;
+
+    return result;
   },
 
   endBattle(result) {
@@ -163,6 +176,7 @@ const BattleScene = new Phaser.Class({
       this.scene.stop('WorldScene');
       this.scene.run('GameOver');
     } else if (result === 'victory') {
+      setScore(this.getPoints());
       this.scene.wake('WorldScene');
     }
   },
