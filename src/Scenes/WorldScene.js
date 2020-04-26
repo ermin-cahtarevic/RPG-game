@@ -118,16 +118,16 @@ const WorldScene = new Phaser.Class({
   },
 
   wake() {
-    if (this.playerY < 150) {
+    if (this.playerY < 153) {
       this.player.x = 50;
       this.player.y = 50;
-    } else if (this.playerY >= 150 && this.playerY < 325) {
+    } else if (this.playerY >= 153 && this.playerY < 328) {
       this.player.x = 850;
       this.player.y = 270;
-    } else if (this.playerY >= 325 && this.playerY < 485) {
+    } else if (this.playerY >= 328 && this.playerY < 488) {
       this.player.x = 50;
       this.player.y = 450;
-    } else if (this.playerY >= 485 && this.playerX > 125) {
+    } else if (this.playerY >= 488 && this.playerX > 125) {
       this.player.x = 850;
       this.player.y = 575;
     } else if (this.playerY >= 485 && this.playerX <= 125) {
@@ -176,7 +176,7 @@ const WorldScene = new Phaser.Class({
   },
 
   onFinishGame() {
-
+    this.scene.start('Victory');
   },
 
   update() {
