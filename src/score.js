@@ -4,6 +4,7 @@ const getScore = () => score;
 
 const setScore = (points) => {
   score += points;
+  return `Current score: ${score}`;
 };
 
 const resetScore = () => {
