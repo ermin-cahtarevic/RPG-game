@@ -11,6 +11,7 @@ import CreditsScene from './Scenes/CreditsScene';
 import VictoryScene from './Scenes/VictoryScene';
 import Model from './Model';
 import WorldScene from './Scenes/WorldScene';
+import './styles/style.css';
 
 class Game extends Phaser.Game {
   constructor() {
