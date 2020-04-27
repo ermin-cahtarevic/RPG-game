@@ -1,9 +1,9 @@
 import 'regenerator-runtime';
 import error from './Helpers/error';
 
-const initGame = async () => {
-  let returnValue = {};
+// const fetch = require('node-fetch');
 
+const initGame = async () => {
   const title = JSON.stringify({
     name: 'Forest Run',
   });
@@ -17,19 +17,13 @@ const initGame = async () => {
     body: title,
   };
 
-  try {
-    const response = await fetch(url, data);
-    returnValue = await response.json();
-  } catch (err) {
-    error(err);
-  }
+  const response = await fetch(url, data);
+  const result = await response.json();
 
-  return returnValue.result;
+  return result.result;
 };
 
 const postScore = async (name, score) => {
-  let returnValue = {};
-
   const post = JSON.stringify({
     user: name,
     score,
@@ -37,21 +31,12 @@ const postScore = async (name, score) => {
   const url = 'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/mks0JG7qQwICboU6t2sW/scores/';
   const data = {
     method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
     body: post,
   };
 
-  try {
-    const response = await fetch(url, data);
-    returnValue = await response.json();
-  } catch (err) {
-    error(err);
-  }
-
-  return returnValue;
+  const response = await fetch(url, data);
+  const result = await response.json();
+  return result;
 };
 
 const sortPlayers = (input) => {
@@ -67,8 +52,6 @@ const sortPlayers = (input) => {
 };
 
 const getScores = async () => {
-  let returnValue = {};
-
   const url = 'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/mks0JG7qQwICboU6t2sW/scores/';
   const data = {
     method: 'GET',
@@ -78,14 +61,10 @@ const getScores = async () => {
     },
   };
 
-  try {
-    const response = await fetch(url, data);
-    returnValue = await response.json();
-  } catch (err) {
-    error(err);
-  }
+  const response = await fetch(url, data);
+  const result = await response.json();
 
-  return sortPlayers(returnValue.result);
+  return sortPlayers(result.result);
 };
 
 export { initGame, postScore, getScores };

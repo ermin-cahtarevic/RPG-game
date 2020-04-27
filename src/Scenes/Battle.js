@@ -81,8 +81,8 @@ const BattleScene = new Phaser.Class({
     let enemy2 = '';
     if (data === 'tree') {
       if (Math.floor(this.playerY) < 300) {
-        enemy1 = new Enemy(this, 150, 120, 'bat1', 'Bat 1', 500, 100);
-        enemy2 = new Enemy(this, 150, 280, 'bat2', 'Bat 2', 600, 150);
+        enemy1 = new Enemy(this, 150, 120, 'bat1', 'Bat 1', 50, 10);
+        enemy2 = new Enemy(this, 150, 280, 'bat2', 'Bat 2', 60, 15);
       } else {
         enemy1 = new Enemy(this, 150, 120, 'spider1', 'Spider 1', 60, 15);
         enemy2 = new Enemy(this, 150, 280, 'spider2', 'Spider 2', 70, 20);

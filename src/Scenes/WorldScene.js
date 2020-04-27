@@ -108,13 +108,13 @@ const WorldScene = new Phaser.Class({
     this.physics.add.overlap(this.player, win, this.onFinishGame, false, this);
 
     this.overlapTrigger = false;
-    this.overlapForest = this.physics.add.overlap(
-      this.player,
-      this.trees,
-      this.onMeetEnemy,
-      false,
-      this,
-    );
+    // this.overlapForest = this.physics.add.overlap(
+    //   this.player,
+    //   this.trees,
+    //   this.onMeetEnemy,
+    //   false,
+    //   this,
+    // );
 
     const scoreBox = this.add.image(255, 165, 'button2');
     scoreBox.setScrollFactor(0, 0);
