@@ -1,5 +1,7 @@
 import 'regenerator-runtime';
 
+const fetch = require('node-fetch');
+
 const initGame = async () => {
   const title = JSON.stringify({
     name: 'Forest Run',
@@ -17,7 +19,7 @@ const initGame = async () => {
   const response = await fetch(url, data);
   const result = await response.json();
 
-  return result.result;
+  return result;
 };
 
 const postScore = async (name, score) => {
@@ -25,7 +27,7 @@ const postScore = async (name, score) => {
     user: name,
     score,
   });
-  const url = 'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/mks0JG7qQwICboU6t2sW/scores/';
+  const url = 'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/bvAMpQpTxVBlXQtGv2YY/scores/';
   const data = {
     method: 'POST',
     headers: {
@@ -37,7 +39,7 @@ const postScore = async (name, score) => {
 
   const response = await fetch(url, data);
   const result = await response.json();
-  return result;
+  return result.result;
 };
 
 const sortPlayers = (input) => {
@@ -53,7 +55,7 @@ const sortPlayers = (input) => {
 };
 
 const getScores = async () => {
-  const url = 'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/mks0JG7qQwICboU6t2sW/scores/';
+  const url = 'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/bvAMpQpTxVBlXQtGv2YY/scores/';
   const data = {
     method: 'GET',
     headers: {
