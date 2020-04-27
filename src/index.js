@@ -13,8 +13,8 @@ import VictoryScene from './Scenes/VictoryScene';
 import LeaderboardScene from './Scenes/LeaderboardScene';
 import WorldScene from './Scenes/WorldScene';
 import Model from './Objects/Model';
-import { setUser } from './user';
-import './dom';
+import { setUser } from './Helpers/user';
+import './Helpers/dom';
 import './styles/style.css';
 
 class Game extends Phaser.Game {

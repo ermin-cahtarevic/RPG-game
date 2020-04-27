@@ -68,12 +68,12 @@ const BattleScene = new Phaser.Class({
 
   startBattle(data) {
     // player character - warrior1
-    const warrior1 = new PlayerCharacter(this, 650, 125, 'warrior1', 'Warrior 1', 100, 140);
+    const warrior1 = new PlayerCharacter(this, 650, 125, 'warrior1', 'Warrior 1', 120, 50);
     warrior1.scale = 1.5;
     this.add.existing(warrior1);
 
     // player character - warrior2
-    const warrior2 = new PlayerCharacter(this, 650, 275, 'warrior2', 'Warrior 2', 80, 130);
+    const warrior2 = new PlayerCharacter(this, 650, 275, 'warrior2', 'Warrior 2', 100, 30);
     warrior2.scale = 1.5;
     this.add.existing(warrior2);
 
@@ -81,34 +81,34 @@ const BattleScene = new Phaser.Class({
     let enemy2 = '';
     if (data === 'tree') {
       if (Math.floor(this.playerY) < 300) {
-        enemy1 = new Enemy(this, 150, 120, 'bat1', 'Bat 1', 50, 3);
-        enemy2 = new Enemy(this, 150, 280, 'bat2', 'Bat 2', 50, 3);
+        enemy1 = new Enemy(this, 150, 120, 'bat1', 'Bat 1', 500, 100);
+        enemy2 = new Enemy(this, 150, 280, 'bat2', 'Bat 2', 600, 150);
       } else {
-        enemy1 = new Enemy(this, 150, 120, 'spider1', 'Spider 1', 50, 3);
-        enemy2 = new Enemy(this, 150, 280, 'spider2', 'Spider 2', 50, 3);
+        enemy1 = new Enemy(this, 150, 120, 'spider1', 'Spider 1', 60, 15);
+        enemy2 = new Enemy(this, 150, 280, 'spider2', 'Spider 2', 70, 20);
       }
     } else {
       switch (data) {
         case 'skeleton':
-          enemy1 = new Enemy(this, 150, 120, 'skeleton1', 'Skeleton 1', 50, 3);
-          enemy2 = new Enemy(this, 150, 280, 'skeleton2', 'Skeleton 2', 50, 3);
+          enemy1 = new Enemy(this, 150, 120, 'skeleton1', 'Skeleton 1', 70, 15);
+          enemy2 = new Enemy(this, 150, 280, 'skeleton2', 'Skeleton 2', 80, 15);
           break;
         case 'pirate':
-          enemy1 = new Enemy(this, 150, 120, 'pirate1', 'Pirate 1', 50, 3);
-          enemy2 = new Enemy(this, 150, 280, 'pirate2', 'Pirate 2', 50, 3);
+          enemy1 = new Enemy(this, 150, 120, 'pirate1', 'Pirate 1', 70, 20);
+          enemy2 = new Enemy(this, 150, 280, 'pirate2', 'Pirate 2', 80, 30);
           break;
         case 'ninja':
-          enemy1 = new Enemy(this, 150, 120, 'ninja1', 'Ninja 1', 50, 3);
-          enemy2 = new Enemy(this, 150, 280, 'ninja2', 'Ninja 2', 50, 3);
+          enemy1 = new Enemy(this, 150, 120, 'ninja1', 'Ninja 1', 90, 20);
+          enemy2 = new Enemy(this, 150, 280, 'ninja2', 'Ninja 2', 90, 25);
           break;
         case 'monster':
-          enemy1 = new Enemy(this, 150, 120, 'monster1', 'Monster 1', 50, 3);
-          enemy2 = new Enemy(this, 150, 280, 'monster2', 'Monster 2', 50, 3);
+          enemy1 = new Enemy(this, 150, 120, 'monster1', 'Monster 1', 100, 60);
+          enemy2 = new Enemy(this, 150, 280, 'monster2', 'Monster 2', 130, 70);
           break;
 
         default:
-          enemy1 = new Enemy(this, 150, 120, 'skeleton1', 'Skeleton 1', 50, 3);
-          enemy2 = new Enemy(this, 150, 280, 'skeleton2', 'Skeleton 2', 50, 3);
+          enemy1 = new Enemy(this, 150, 120, 'skeleton1', 'Skeleton 1', 70, 15);
+          enemy2 = new Enemy(this, 150, 280, 'skeleton2', 'Skeleton 2', 80, 15);
           break;
       }
     }
@@ -173,8 +173,8 @@ const BattleScene = new Phaser.Class({
     this.scene.remove('BattleScene');
 
     if (result === 'gameOver') {
-      this.scene.stop('WorldScene');
-      this.scene.run('GameOver');
+      // this.scene.start('GameOver');
+      console.log('looser!')
     } else if (result === 'victory') {
       setScore(this.getPoints());
       this.scene.wake('WorldScene');

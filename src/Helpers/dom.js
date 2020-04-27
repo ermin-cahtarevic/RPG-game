@@ -1,6 +1,6 @@
 /* eslint-disable import/no-cycle */
 
-import startGame from './index';
+import startGame from '../index';
 import { checkForm, noInputError, clearDOM } from './helper';
 
 const inputWrap = document.createElement('div');

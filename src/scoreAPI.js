@@ -1,5 +1,5 @@
 import 'regenerator-runtime';
-import error from './error';
+import error from './Helpers/error';
 
 const initGame = async () => {
   let returnValue = {};

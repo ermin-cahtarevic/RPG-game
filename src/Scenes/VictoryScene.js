@@ -5,7 +5,7 @@ import 'phaser';
 import config from '../Config/config';
 import Button from '../Objects/Button';
 import { getScore, resetScore } from '../score';
-import { getUser } from '../user';
+import { getUser } from '../Helpers/user';
 import { postScore } from '../scoreAPI';
 
 export default class VictoryScene extends Phaser.Scene {
