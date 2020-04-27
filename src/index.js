@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+/* eslint-disable import/no-cycle */
 
 import 'phaser';
 import config from './Config/config';
@@ -9,8 +10,11 @@ import TitleScene from './Scenes/TitleScene';
 import OptionsScene from './Scenes/OptionsScene';
 import CreditsScene from './Scenes/CreditsScene';
 import VictoryScene from './Scenes/VictoryScene';
-import Model from './Model';
+import LeaderboardScene from './Scenes/LeaderboardScene';
 import WorldScene from './Scenes/WorldScene';
+import Model from './Objects/Model';
+import { setUser } from './user';
+import './dom';
 import './styles/style.css';
 
 class Game extends Phaser.Game {
@@ -24,10 +28,16 @@ class Game extends Phaser.Game {
     this.scene.add('Options', OptionsScene);
     this.scene.add('Credits', CreditsScene);
     this.scene.add('Victory', VictoryScene);
+    this.scene.add('Leaderboard', LeaderboardScene);
     this.scene.add('GameOver', GameOverScene);
     this.scene.add('WorldScene', WorldScene);
     this.scene.start('Boot');
   }
 }
 
-window.game = new Game();
+const startGame = (user) => {
+  setUser(user);
+  window.game = new Game();
+};
+
+export default startGame;

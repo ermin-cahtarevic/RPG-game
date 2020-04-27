@@ -1,6 +1,9 @@
 import 'regenerator-runtime';
+import error from './error';
 
 const initGame = async () => {
+  let returnValue = {};
+
   const title = JSON.stringify({
     name: 'Forest Run',
   });
@@ -14,12 +17,19 @@ const initGame = async () => {
     body: title,
   };
 
-  const response = await fetch(url, data);
-  const result = await response.json();
-  return result.result;
+  try {
+    const response = await fetch(url, data);
+    returnValue = await response.json();
+  } catch (err) {
+    error(err);
+  }
+
+  return returnValue.result;
 };
 
 const postScore = async (name, score) => {
+  let returnValue = {};
+
   const post = JSON.stringify({
     user: name,
     score,
@@ -34,12 +44,31 @@ const postScore = async (name, score) => {
     body: post,
   };
 
-  const response = await fetch(url, data);
-  const result = await response.json();
-  return result;
+  try {
+    const response = await fetch(url, data);
+    returnValue = await response.json();
+  } catch (err) {
+    error(err);
+  }
+
+  return returnValue;
+};
+
+const sortPlayers = (input) => {
+  const arr = [];
+
+  for (let i = 0; i < input.length; i += 1) {
+    arr.push([input[i].user, input[i].score]);
+  }
+
+  arr.sort((a, b) => b[1] - a[1]);
+
+  return arr;
 };
 
 const getScores = async () => {
+  let returnValue = {};
+
   const url = 'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/mks0JG7qQwICboU6t2sW/scores/';
   const data = {
     method: 'GET',
@@ -49,10 +78,14 @@ const getScores = async () => {
     },
   };
 
-  const response = await fetch(url, data);
-  const result = await response.json();
+  try {
+    const response = await fetch(url, data);
+    returnValue = await response.json();
+  } catch (err) {
+    error(err);
+  }
 
-  return result;
+  return sortPlayers(returnValue.result);
 };
 
 export { initGame, postScore, getScores };

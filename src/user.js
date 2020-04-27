@@ -1,5 +1,9 @@
-const user = 'Ermin';
+let user = 'Anonymus';
+
+const setUser = (inputUser) => {
+  user = inputUser;
+};
 
 const getUser = () => user;
 
-export default getUser;
+export { setUser, getUser };
