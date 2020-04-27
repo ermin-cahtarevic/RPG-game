@@ -143,7 +143,7 @@ const BattleScene = new Phaser.Class({
     }
 
     if (victory) return { result: 'victory' };
-    if (gameOver) return 'gameOver';
+    if (gameOver) return { result: 'gameOver' };
     return victory || gameOver;
   },
 
@@ -173,8 +173,8 @@ const BattleScene = new Phaser.Class({
     this.scene.remove('BattleScene');
 
     if (result === 'gameOver') {
-      // this.scene.start('GameOver');
-      console.log('looser!')
+      this.scene.stop('WorldScene');
+      this.scene.start('GameOver');
     } else if (result === 'victory') {
       setScore(this.getPoints());
       this.scene.wake('WorldScene');

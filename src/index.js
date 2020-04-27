@@ -16,7 +16,6 @@ import Model from './Objects/Model';
 import { setUser } from './Helpers/user';
 import './Helpers/dom';
 import './styles/style.css';
-import { initGame } from './scoreAPI';
 
 class Game extends Phaser.Game {
   constructor() {
@@ -35,8 +34,6 @@ class Game extends Phaser.Game {
     this.scene.start('Boot');
   }
 }
-
-initGame();
 
 const startGame = (user) => {
   setUser(user);

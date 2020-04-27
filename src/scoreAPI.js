@@ -1,7 +1,4 @@
 import 'regenerator-runtime';
-import error from './Helpers/error';
-
-// const fetch = require('node-fetch');
 
 const initGame = async () => {
   const title = JSON.stringify({
@@ -31,6 +28,10 @@ const postScore = async (name, score) => {
   const url = 'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/mks0JG7qQwICboU6t2sW/scores/';
   const data = {
     method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
     body: post,
   };
 

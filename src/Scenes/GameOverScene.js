@@ -6,6 +6,7 @@ import config from '../Config/config';
 import Button from '../Objects/Button';
 import { getScore, resetScore } from '../score';
 import { postScore } from '../scoreAPI';
+import { getUser } from '../Helpers/user';
 
 export default class GameOverScene extends Phaser.Scene {
   constructor() {
@@ -40,7 +41,7 @@ export default class GameOverScene extends Phaser.Scene {
     const user = getUser();
     const finalScore = getScore();
 
-    // postScore(user, finalScore);
+    postScore(user, finalScore);
 
     this.menuButton = new Button(this, 400, 530, 'button1', 'button2', 'Menu', 'Title');
     resetScore();
