@@ -284,13 +284,13 @@ All of the sprites, backgrounds, buttons and the background music can be found o
 - Netlify 
 - [Leaderboard API](https://www.notion.so/Leaderboard-API-service-24c0c3c116974ac49488d4eb0267ade3) for tracking scores
 
-## Contact 👤 
+## Contact 
 
 - Github: [@ermin-cahtarevic](https://github.com/ermin-cahtarevic)
 - Twitter: [@ErminCahtarevic](https://twitter.com/ErminCahtarevic)
 - Linkedin: [Ermin Cahtarevic](https://www.linkedin.com/in/ermincahtarevic/)
 
-## 🤝 Contributing
+## Contributing
 
 Contributions, issues and feature requests are welcome!
 
