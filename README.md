@@ -17,7 +17,7 @@ Implementation of a Turn-Based RPG Game built with the [Phaser 3](https://phaser
   - [About](#about)
   - [The game](#the-game)
     - [How to play](#how-to-play)
-      - [Get local copy](#get-local-copy)
+      - [Get a local copy](#get-a-local-copy)
     - [Design](#design)
       - [Player characters](#player-characters)
       - [Enemies](#enemies)
@@ -76,14 +76,15 @@ As explained before this is a turn-based game. That means, that when you get int
 
 **Fighting** 
 
-When you get switched to the Battle Field you will see you two warriors on the right side of the screen. And, the two enemies on the left side. 
+When you get switched to the Battle Field you will see your two warriors on the right side of the screen. And, the two enemies on the left side. 
 At the bottom of the screen you will see two menus, with the names of the warriors and the enemies.
 You start of with the Warrior 1 chosen, to start you first click the **Space** button on your keyboard. With that you choose to attack one of the enemies. 
 Then, you use your arrow keys to choose which enemy to attack. (The chosen name gets highlighted in yellow).
+And, again you click **Space** to attack the enemy. A message will show up on the screen to inform you of that.
 
 When the battle finishes you get switched back to the forest, so the Prospector can lead the way again. Or, to the Game Over screen, depending on the outcome of the battle.
 
-#### Get local copy
+#### Get a local copy
 
 *npm required* - [get npm](https://www.npmjs.com/get-npm)
 
@@ -117,7 +118,7 @@ npm test
 
 ### Design
 
-All of the sprites, backgrounds, buttons and the background music can be found on [OpenGameArt](opengameart.org)
+All of the sprites, backgrounds, buttons and the background music can be found on [OpenGameArt](https://opengameart.org/)
 
 #### Player characters
 ---
