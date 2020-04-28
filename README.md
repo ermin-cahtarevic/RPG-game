@@ -25,7 +25,7 @@ Implementation of a Turn-Based RPG Game built with the [Phaser 3](https://phaser
   - [Technologies used](#technologies-used)
   - [Contact](#contact)
   - [Contributing](#contributing)
-  - [Acknowledgements](#acknowledgements)
+  - [Acknowledgments](#acknowledgments)
 
 ## Live Demo
 
