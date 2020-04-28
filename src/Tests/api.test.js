@@ -1,4 +1,4 @@
-import { initGame, postScore, getScores } from '../scoreAPI';
+import { initGame, postScore, getScores } from './apiMock';
 
 describe('Tests for initalizing a new game on Score API', () => {
   test('Should return an object with the string ID of the game', () => {
