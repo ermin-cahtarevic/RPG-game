@@ -39,7 +39,7 @@ The main objective of this project was to build a platform game. The basics of t
 
 The character that you will be interacting with, for most of the time, is the Prospector. He was assigned the task of leading two warriors through an enemy infected forest. The only way to get through the forest is to fight against the enemies that stand in the way (they are hidden, but you will know when you get close to them!).
 
-The Prospector will lead the way and find where the enemies are. But, as his name says he is only there to prospect. The two warriors will have to fight with the enemies so they can move on. 
+The Prospector will lead the way and find where the enemies are. But, he is only there to lead the way. The two warriors will have to fight with the enemies so they can move on. 
 
 **There are six types of enemies**
 
