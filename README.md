@@ -108,7 +108,10 @@ npm install
 npm run start
 ```
 
-**Visit this link to see the game in your browser** [http://localhost:8080/](http://localhost:8080/)
+**Visit this link to see the game in your browser** 
+```
+http://localhost:8080/
+```
 
 **Run Jest tests**
 ```
